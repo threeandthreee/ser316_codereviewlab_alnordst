@@ -3,6 +3,8 @@ package banking.primitive.core;
 public class Savings extends Account {
 	private static final long serialVersionUID = 111L;
 	private int numWithdraws = 0;
+	final int FREE_WITHDRAWAL_COUNT = 3;
+	final float WITHDRAWAL_FEE = 1.0f;
 
 	public Savings(String name) {
 		super(name);
@@ -33,8 +35,8 @@ public class Savings extends Account {
 		if (getState() == State.OPEN && amount > 0.0f) {
 			balance = balance - amount;
 			numWithdraws++;
-			if (numWithdraws > 3)
-				balance = balance - 1.0f;
+			if (numWithdraws > FREE_WITHDRAWAL_COUNT)
+				balance = balance - WITHDRAWAL_FEE;
 			// KG BVA: should be < 0
 			if (balance <= 0.0f) {
 				setState(State.OVERDRAWN);
